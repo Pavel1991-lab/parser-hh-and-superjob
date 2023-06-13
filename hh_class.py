@@ -3,30 +3,38 @@ from abc import ABC, abstractmethod
 import requests
 
 class Engine(ABC):
+    'Получаем запрос по Апи из hh.ru или из superjob. Так же благодаря этому методу ищем вкансии по ключевому слову и по городу'
     @abstractmethod
     def get_request(self, keyword, count):
         pass
 
+    'Для hh.ru выставляем регион Россию, дял superjob оставляем заглушку '
     @abstractmethod
     def area(self):
         pass
 
+    'Из отфильтрованого запроса по городу и ключевому слову, с помощью этого метода'
+    'достаем по ключу нужные значения вакансий'
     @abstractmethod
     def vacancy(self):
         pass
 
+    'Записываем вакансии в json формат'
     @abstractmethod
     def json(self):
         pass
 
+    'Отдельно находим зарпалыт чтобы могли найти самые высокие'
     @abstractmethod
     def salary(self):
         pass
 
+    'Достаем три самых выгодных вакансий'
     @abstractmethod
     def top_vacancies(self):
         pass
 
+    'Три самые выгодные вакансии передаем в json'
     @abstractmethod
     def top3_json(self):
         pass
