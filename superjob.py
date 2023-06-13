@@ -43,6 +43,8 @@ class Superjob(Engine):
             jobs.append(job['payment_to'])
             jobs.append(job['currency'])
             jobs.append(job['experience'])
+            jobs.append(job['town'])
+
             result.append(jobs)
         return result
 
@@ -60,26 +62,34 @@ class Superjob(Engine):
             money.append(i[3])
             money.append(i[4])
             money.append(i[5])
+            money.append(i[6])
+            money.append(i[7])
             salary.append(money)
         return salary
 
     def top_vacancies(self):
         rub = []
+        usd = []
         for i in self.salary():
             if i[4] == 'rub':
                 rub.append(i)
-        sorted_jobs = sorted(rub, key=lambda x: x[3], reverse=True)
-        top_three = sorted(sorted_jobs[:3], reverse=True)
-        return top_three
+        for i in self.salary():
+            if i[4] == 'usd':
+                usd.append(i)
+        sorted_jobs_rub = sorted(rub, key=lambda x: x[3], reverse=True)
+        sorted_jobs_usd = sorted(usd, key=lambda x: x[3], reverse=True)
+        top_three_rub = sorted(sorted_jobs_rub[:3], reverse=True)
+        top_three_usd = sorted(sorted_jobs_usd[:3], reverse=True)
+        return top_three_rub, top_three_usd
 
 
 
 
     def top3_json(self):
-        with open('top3_vacancies.json', 'w', encoding='utf-8') as f:
+        with open('top3_vacancies_sj.json', 'w', encoding='utf-8') as f:
             # записываем данные в JSON-формате с параметром ensure_ascii=False
             json.dump(self.top_vacancies(), f, indent=4, ensure_ascii=False)
 
-a = Superjob('python', 'Казань')
+a = Superjob('python', 'Москва')
 
-print(a.top3_json())
+print(a.json())
