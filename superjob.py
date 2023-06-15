@@ -21,43 +21,6 @@ class Superjob(Engine):
             "keyword": self.__keyword
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         responce = []
         for city_id in self.__city_id:
             params.update({"town": city_id})
