@@ -1,4 +1,4 @@
-import json
+
 from abc import ABC, abstractmethod
 import requests
 
@@ -19,11 +19,6 @@ class Engine(ABC):
     def vacancy(self):
         pass
 
-    'Записываем вакансии в json формат'
-    @abstractmethod
-    def json(self):
-        pass
-
     'Отдельно находим зарпалыт чтобы могли найти самые высокие'
     @abstractmethod
     def salary(self):
@@ -34,10 +29,6 @@ class Engine(ABC):
     def top_vacancies(self):
         pass
 
-    'Три самые выгодные вакансии передаем в json'
-    @abstractmethod
-    def top3_json(self):
-        pass
 
 
 
@@ -85,16 +76,11 @@ class HH(Engine):
             result.append(jobs)
         return result
 
-    def json(self):
-        with open('vacancies.json', 'w', encoding='utf-8') as f:
-            # записываем данные в JSON-формате с параметром ensure_ascii=False
-            json.dump(self.vacancy(), f, indent=4, ensure_ascii=False)
 
     def salary(self):
         salary = []
         for i in self.area():
             salary.append(i['salary'])
-
         return salary
 
     def top_vacancies(self):
@@ -125,10 +111,6 @@ class HH(Engine):
                 'salary_to': vacancy[1]['salary']['to']
             })
         return top_vacancies_dict
-    def top3_json(self):
-        with open('top3_vacancies.json', 'w', encoding='utf-8') as f:
-        # записываем данные в JSON-формате с параметром ensure_ascii=False
-            json.dump(self.top_vacancies(), f, indent=4, ensure_ascii=False)
 
 
 

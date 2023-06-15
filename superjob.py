@@ -1,9 +1,9 @@
-import json
-
+from dotenv import load_dotenv
+import os
 import requests
-
 from hh_class import Engine
-
+load_dotenv()
+API_KEY = os.getenv('MY_API_KEY')
 
 class Superjob(Engine):
     def __init__(self, keyword, city_id):
@@ -13,13 +13,51 @@ class Superjob(Engine):
 
     def get_request(self):
         headers = {
-            'X-Api-App-Id': 'v3.r.120090948.572bca28fd872bb2739e14bb6605d85591462276.d2b41b0e28e946135e7cb1756bb9b86494dedd23',
+            'X-Api-App-Id': API_KEY,
             'Content-Type': 'application/json'}
         params = {
             "page": 1,
             "count": self.__count,
             "keyword": self.__keyword
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         responce = []
         for city_id in self.__city_id:
             params.update({"town": city_id})
@@ -47,11 +85,6 @@ class Superjob(Engine):
 
             result.append(jobs)
         return result
-
-    def json(self):
-        with open('superjob_vacancies.json', 'w', encoding='utf-8') as f:
-            # записываем данные в JSON-формате с параметром ensure_ascii=False
-            json.dump(self.vacancy(), f, indent=4, ensure_ascii=False)
 
     def salary(self):
         salary = []
@@ -85,11 +118,3 @@ class Superjob(Engine):
 
 
 
-    def top3_json(self):
-        with open('top3_vacancies_sj.json', 'w', encoding='utf-8') as f:
-            # записываем данные в JSON-формате с параметром ensure_ascii=False
-            json.dump(self.top_vacancies(), f, indent=4, ensure_ascii=False)
-
-a = Superjob('python', 'Москва')
-
-print(a.json())
